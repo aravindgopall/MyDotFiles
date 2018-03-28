@@ -4,6 +4,28 @@
 # Path to your oh-my-zsh installation.
 export ZSH=/Users/aravind.mallapureddy/.oh-my-zsh
 
+
+#aliases
+alias gs='git status'
+alias ga='git add'
+alias gc='git commit'
+alias die='git stash'
+alias push='git push'
+alias gp='git pull'
+alias birth='git stash pop'
+alias gclone='git clone'
+alias c='clear'
+alias v='vim .'
+alias vrc='vim ~/.vimrc'
+alias zrc='vim ~/.zshrc'
+alias trc='vim ~/.tmux.config'
+
+
+
+
+
+
+
 # Set name of the theme to load. Optionally, if you set this to "random"
 # it'll load a random theme each time that oh-my-zsh is loaded.
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
