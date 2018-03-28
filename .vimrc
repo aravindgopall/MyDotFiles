@@ -177,7 +177,7 @@ endif
 "Purescript
 " let g:psc_ide_log_level = 0
 let g:psc_ide_syntastic_mode = 1
-
+let g:psc_ide_suggestions=1
 au FileType purescript map <leader>t :Ptype<CR>
 au FileType purescript nmap <leader>s :PapplySuggestion<CR>
 au FileType purescript nmap <leader>p :Ppursuit<CR>
