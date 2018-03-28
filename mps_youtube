@@ -1,0 +1,25 @@
+# this could help you to play youtube from terminal
+--- Install mpv player for MacOS
+brew install mpv
+
+--- Install mps-youtube using pip and upgrade it
+[sudo] pip3 install mps-youtube --upgrade
+
+
+-- Install youtube_dl using pip
+[sudo] pip install youtube_dl 
+
+
+PS:: If it doesn't work try with --upgrade and pip3
+
+
+
+Finally Setup is done...
+now simply run mpsyt 
+then use 'h' for help
+	'/search ' for search
+	
+
+
+
+
