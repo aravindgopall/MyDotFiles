@@ -1,0 +1,11 @@
+alias g='git'
+alias gc='git commit'
+alias gcc='git checkout'
+alias die='git stash'
+alias birth='git stash pop'
+alias gp='git pull'
+alias push='git push'
+alias c='clear'
+alias gs='git status'
+alias jsa='./gradlew createJsaFiles'
+
