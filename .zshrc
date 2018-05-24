@@ -2,10 +2,28 @@
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
-export ZSH=/Users/aravind.mallapureddy/.oh-my-zsh
 
+export ZSH=/Users/aravind.mallapureddy/.oh-my-zsh
+export TERM="xterm-256color"
+source "$HOME/.antigen/antigen.zsh"
+
+antigen use oh-my-zsh
+antigen bundle arialdomartini/oh-my-git
+antigen theme arialdomartini/oh-my-git-themes oppa-lana-style
+
+antigen apply
+: ${omg_is_a_git_repo_symbol:='❤'}
+: ${omg_has_untracked_files_symbol:='∿'}
+: ${omg_has_adds_symbol:='+'}
+: ${omg_has_deletions_symbol:='-'}
+: ${omg_has_cached_deletions_symbol:='✖'}
+: ${omg_has_modifications_symbol:='✎'}
+: ${omg_has_cached_modifications_symbol:='☲'}
+: ${omg_ready_to_commit_symbol:='→'}
+: ${omg_is_on_a_tag_symbol:='⌫'}
 
 #aliases
+eval $(thefuck --alias FUCK)
 alias gs='git status'
 alias ga='git add'
 alias gc='git commit'
@@ -19,17 +37,16 @@ alias v='vim .'
 alias vrc='vim ~/.vimrc'
 alias zrc='vim ~/.zshrc'
 alias trc='vim ~/.tmux.config'
-
-
-
-
-
-
-
-# Set name of the theme to load. Optionally, if you set this to "random"
+alias buw='pulp -w build'
+alias bu='pulp build'
+alias g='git'
+alias start='npm start'
+alias gcc='git checkout'
+alias jsa='./gradlew createJsaFiles'
+alias gd='git diff'
 # it'll load a random theme each time that oh-my-zsh is loaded.
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
-ZSH_THEME="robbyrussell"
+ZSH_THEME="powerlevel9k/powerlevel9k"
 # Set list of themes to load
 # Setting this variable when ZSH_THEME=random
 # cause zsh load theme from this variable instead of
@@ -133,9 +150,10 @@ BULLETTRAIN_PROMPT_ORDER=(
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
-source ~/.oh-my-zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-plugins=(git colorize bundler)
-source  ~/powerlevel9k/powerlevel9k.zsh-theme
+source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
+plugins=(git dir)
+# source  ~/.oh-my-zsh/custom/themes/powerlevel9k/powerlevel9k.zsh-theme
 POWERLEVEL9K_SHORTEN_DIR_LENGTH=1
 POWERLEVEL9K_SHORTEN_DELIMITER=""
 POWERLEVEL9K_SHORTEN_STRATEGY="truncate_from_right"
@@ -171,4 +189,8 @@ zsh_wifi_signal(){
               echo -n "%{$color%}$ssid $speed Mb/s%{%f%}" # removed char not in my PowerLine font 
             fi
    }
-POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status battery custom_wifi_signal ip)
+
+eval $(thefuck --alias)
+
+### Added by IBM Cloud CLI
+source /usr/local/Bluemix/bx/zsh_autocomplete

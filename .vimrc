@@ -40,6 +40,7 @@ Plugin 'jelera/vim-javascript-syntax'
 Plugin 'moll/vim-node'
 
 " Ide stuff
+Plugin 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plugin 'tpope/vim-fugitive'
 Plugin 'tpope/vim-sensible'
 Plugin 'tpope/vim-surround'
@@ -63,6 +64,8 @@ Plugin 'gregsexton/gitv'
 Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
 Plugin 'ctrlp.vim' 
+Plugin 'scrooloose/nerdtree'
+
 " Purescript
 Plugin 'raichoo/purescript-vim'
 Plugin 'frigoeu/psc-ide-vim'
