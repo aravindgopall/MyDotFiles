@@ -4,6 +4,7 @@ filetype off                  " required
 " set the runtime path to include Vundle and initialize
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
+set rtp+=/usr/local/opt/fzf
 
 " let Vundle manage Vundle, required
 Plugin 'VundleVim/Vundle.vim'
@@ -41,6 +42,7 @@ Plugin 'moll/vim-node'
 
 " Ide stuff
 Plugin 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plugin 'junegunn/fzf.vim'
 Plugin 'tpope/vim-fugitive'
 Plugin 'tpope/vim-sensible'
 Plugin 'tpope/vim-surround'
@@ -65,6 +67,7 @@ Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
 Plugin 'ctrlp.vim' 
 Plugin 'scrooloose/nerdtree'
+Plugin 'wincent/ferret'
 
 " Purescript
 Plugin 'raichoo/purescript-vim'
@@ -99,7 +102,7 @@ syntax on
 " Smart searching
 set ignorecase
 set smartcase
-set incsearch
+" set incsearch
 set hlsearch
 
 " Show line numbers
@@ -115,7 +118,7 @@ set splitbelow
 set autowriteall
 set autoread
 let g:airline_powerline_fonts=1
-set showmatch
+" set showmatch
 set mat=2
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip,.gitignore,*/bower_components/*
 
@@ -228,3 +231,28 @@ map <silent> tw :call GHC_ShowType(1)<CR>
 
 set background=light
 " colorscheme smyck
+" set mouse click for tab
+set mouse=a
+" map to complete already entered line
+imap <c-x><c-l> <plug>(fzf-complete-line)
+
+" to go to same line of file opened before
+augroup vimrcEx
+  autocmd!
+  autocmd BufReadPost *
+       \ if line("'\"") > 0 && line("'\"") <= line("$") |
+       \   exe "normal g`\"" |
+       \ endif
+augroup END
+
+"for git commit 
+augroup gitCommitEditMsg
+   autocmd!
+   autocmd BufReadPost *
+     \ if @% == '.git/COMMIT_EDITMSG' |
+     \   exe "normal gg" |
+     \ endif
+augroup END
+
+"clear search after enter
+:nnoremap <CR> :nohlsearch<cr>
