@@ -2,31 +2,25 @@
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
-
 export ZSH=/Users/aravind.mallapureddy/.oh-my-zsh
-export TERM="xterm-256color"
-source "$HOME/.antigen/antigen.zsh"
-
-antigen use oh-my-zsh
-antigen bundle arialdomartini/oh-my-git
-antigen theme arialdomartini/oh-my-git-themes oppa-lana-style
-
-antigen apply
-: ${omg_is_a_git_repo_symbol:='❤'}
-: ${omg_has_untracked_files_symbol:='∿'}
-: ${omg_has_adds_symbol:='+'}
-: ${omg_has_deletions_symbol:='-'}
-: ${omg_has_cached_deletions_symbol:='✖'}
-: ${omg_has_modifications_symbol:='✎'}
-: ${omg_has_cached_modifications_symbol:='☲'}
-: ${omg_ready_to_commit_symbol:='→'}
-: ${omg_is_on_a_tag_symbol:='⌫'}
+# source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+# export PATH=/usr/local/bin:$PATH
+# if [ "$TMUX" = "" ]; then tmux; fi
+if which tmux 2>&1 >/dev/null; then
+  if [ $TERM != "screen-256color" ] && [  $TERM != "screen" ]; then
+    tmux attach -t hack || tmux new -s hack; exit
+  fi
+fi
 
 #aliases
-eval $(thefuck --alias FUCK)
+alias cja='./gradlew createJsaFiles'
+alias ccc='cc --std=c99 -Wall'
+alias bro='docker run -it browsh/browsh'
+alias etlas='/Users/aravind.mallapureddy/Downloads/etlas'
 alias gs='git status'
 alias ga='git add'
 alias gc='git commit'
+alias gd='git diff'
 alias die='git stash'
 alias push='git push'
 alias gp='git pull'
@@ -37,15 +31,17 @@ alias v='vim .'
 alias vrc='vim ~/.vimrc'
 alias zrc='vim ~/.zshrc'
 alias trc='vim ~/.tmux.config'
-alias buw='pulp -w build'
-alias bu='pulp build'
-alias g='git'
-alias start='npm start'
-alias gcc='git checkout'
-alias jsa='./gradlew createJsaFiles'
-alias gd='git diff'
+alias dc='docker exec -it scylla cqlsh'
+alias pb='pulp build'
+alias pwb='pulp --watch build'
+alias bi='bower i'
+alias ni='npm i'
+alias nu='nvm use'
+
+# Set name of the theme to load. Optionally, if you set this to "random"
 # it'll load a random theme each time that oh-my-zsh is loaded.
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
+# ZSH_THEME="robbyrussell"
 ZSH_THEME="powerlevel9k/powerlevel9k"
 # Set list of themes to load
 # Setting this variable when ZSH_THEME=random
@@ -105,7 +101,7 @@ source $ZSH/oh-my-zsh.sh
 
 BULLETTRAIN_PROMPT_ORDER=(
   git
-  dir
+  # dir
 )
 
 
@@ -117,7 +113,7 @@ BULLETTRAIN_PROMPT_ORDER=(
 #POWERLINE_GIT_MODIFIED="%F{blue}✹%F{black}"
 #POWERLINE_GIT_DELETED="%F{red}✖%F{black}"
 #POWERLINE_GIT_UNTRACKED="%F{red}✭%F{black}"
-#POWERLINE_GIT_RENAMED="➜"
+#POWER[2;2RLINE_GIT_RENAMED="➜"
 #POWERLINE_GIT_UNMERGED="═"
 #POWERLINE_PATH="short"
 #export POWERLINE_HIDE_HOST_NAME="true"
@@ -150,11 +146,9 @@ BULLETTRAIN_PROMPT_ORDER=(
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
-source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
-plugins=(git dir)
-# source  ~/.oh-my-zsh/custom/themes/powerlevel9k/powerlevel9k.zsh-theme
-POWERLEVEL9K_SHORTEN_DIR_LENGTH=1
+# source ~/.oh-my-zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+plugins=(git colorize bundler)
+# source  ~/powerlevel9k/powerlevel9k.zsh-theme
 POWERLEVEL9K_SHORTEN_DELIMITER=""
 POWERLEVEL9K_SHORTEN_STRATEGY="truncate_from_right"
 POWERLEVEL9K_CONTEXT_TEMPLATE="AravindVirat"
@@ -189,8 +183,12 @@ zsh_wifi_signal(){
               echo -n "%{$color%}$ssid $speed Mb/s%{%f%}" # removed char not in my PowerLine font 
             fi
    }
+source $HOME/.cargo/env
+POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status battery custom_wifi_signal ip)
 
-eval $(thefuck --alias)
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && . "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+export PATH="/usr/local/opt/sqlite/bin:$PATH"
 
-### Added by IBM Cloud CLI
-source /usr/local/Bluemix/bx/zsh_autocomplete
+export PATH=/Users/aravind.mallapureddy/.local/bin:$PATH

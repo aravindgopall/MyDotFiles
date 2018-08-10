@@ -256,3 +256,4 @@ augroup END
 
 "clear search after enter
 :nnoremap <CR> :nohlsearch<cr>
+
