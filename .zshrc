@@ -19,7 +19,7 @@ alias bro='docker run -it browsh/browsh'
 alias etlas='/Users/aravind.mallapureddy/Downloads/etlas'
 alias gs='git status'
 alias ga='git add'
-alias gc='git commit'
+alias gc='git commit -m' 
 alias gd='git diff'
 alias die='git stash'
 alias push='git push'
@@ -37,7 +37,7 @@ alias pwb='pulp --watch build'
 alias bi='bower i'
 alias ni='npm i'
 alias nu='nvm use'
-
+alias wp='security find-generic-password -D "AirPort network password" -a'
 # Set name of the theme to load. Optionally, if you set this to "random"
 # it'll load a random theme each time that oh-my-zsh is loaded.
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
@@ -192,3 +192,4 @@ export NVM_DIR="$HOME/.nvm"
 export PATH="/usr/local/opt/sqlite/bin:$PATH"
 
 export PATH=/Users/aravind.mallapureddy/.local/bin:$PATH
+export PATH="/usr/local/opt/openssl/bin:$PATH"

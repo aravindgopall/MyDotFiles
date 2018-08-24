@@ -68,6 +68,7 @@ Plugin 'vim-airline/vim-airline-themes'
 Plugin 'ctrlp.vim' 
 Plugin 'scrooloose/nerdtree'
 Plugin 'wincent/ferret'
+Plugin 'UltiSnips'
 
 " Purescript
 Plugin 'raichoo/purescript-vim'
@@ -257,3 +258,50 @@ augroup END
 "clear search after enter
 :nnoremap <CR> :nohlsearch<cr>
 
+
+
+" Following yoututbe
+" set colorcolumn=170
+call matchadd('ColorColumn','\%150v',100)
+exec "set listchars=tab:\uBB\uBB,trail:\uB7,nbsp:~"
+set list
+
+nnoremap ; :
+
+set path+=**
+set wildmenu
+
+"ctags
+command! MakeTags !ctags -R .
+
+" {{{ netrw: Configuration
+" "     ====================
+"
+let g:netrw_banner=0        " disable banner
+let g:netrw_browse_split=4  " open in prior window
+let g:netrw_altv=1          " open splits to the right
+let g:netrw_liststyle=3     " tree view
+" hide gitignore'd files
+let g:netrw_list_hide=netrw_gitignore#Hide()
+" hide dotfiles by default (this is the string toggled by netrw-gh)
+let g:netrw_list_hide.=',\(^\|\s\s\)\zs\.\S\+'
+
+
+
+
+au VimEnter no_plugins.vim normal 8Gzz
+au VimEnter no_plugins.vim command! GO normal M17jzzH
+au VimEnter no_plugins.vim command! BACK normal M17kzzH
+au VimEnter no_plugins.vim command! RUN execute getline(".")
+
+
+" Own mappings testing
+" *unmap <c-u>
+nnoremap H 0
+nnoremap L $
+inoremap <c-u> <esc>v$Ui
+inoremap <c-h> <esc>k0veyo<esc>pi
+nnoremap <leader>v :source $MYVIMRC<cr>
+nnoremap <leader>ev :vsplit $MYVIMRC<cr>
+iabbrev impo import
+iabbrev @@ aravind.mallapureddy@juspay.in
