@@ -6,11 +6,11 @@ export ZSH=/Users/aravind.mallapureddy/.oh-my-zsh
 # source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 # export PATH=/usr/local/bin:$PATH
 # if [ "$TMUX" = "" ]; then tmux; fi
-if which tmux 2>&1 >/dev/null; then
-  if [ $TERM != "screen-256color" ] && [  $TERM != "screen" ]; then
-    tmux attach -t hack || tmux new -s hack; exit
-  fi
-fi
+# if which tmux 2>&1 >/dev/null; the
+#   if [ $TERM != "screen-256color" ] && [  $TERM != "screen" ]; then
+#     tmux attach -t hack || tmux new -s hack; exit
+#   fi
+# fi
 
 #aliases
 alias cja='./gradlew createJsaFiles'
@@ -95,9 +95,11 @@ ZSH_THEME="powerlevel9k/powerlevel9k"
 plugins=(
   git
   zsh-autosuggestions
+  zsh-completions
 )
 
 source $ZSH/oh-my-zsh.sh
+source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
 
 BULLETTRAIN_PROMPT_ORDER=(
   git
@@ -188,8 +190,19 @@ POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status battery custom_wifi_signal ip)
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && . "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+# [ -s "$NVM_DIR/bash_completion" ] && . "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 export PATH="/usr/local/opt/sqlite/bin:$PATH"
 
 export PATH=/Users/aravind.mallapureddy/.local/bin:$PATH
 export PATH="/usr/local/opt/openssl/bin:$PATH"
+export PATH="/usr/local/opt/mysql@5.7/bin:$PATH"
+nvm use v9
+
+eval "$(pyenv init -)"
+pyenv shell pypy3.5-6.0.0
+
+export GOPATH="$HOME/Desktop/code/go"
+export GOROOT="$HOME/Desktop/code/go"
+
+
+source /usr/local/bin/aws_zsh_completer.sh

@@ -19,6 +19,7 @@ Plugin 'tpope/vim-salve'
 " Ag
 " Plugin 'ag.vim'
 
+Plugin  'ervandew/supertab'
 
 " Go
 Plugin 'fatih/vim-go'
@@ -122,7 +123,6 @@ let g:airline_powerline_fonts=1
 " set showmatch
 set mat=2
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip,.gitignore,*/bower_components/*
-
 
 let mapleader=",,"
 let maplocalleader="\\"
@@ -259,7 +259,6 @@ augroup END
 :nnoremap <CR> :nohlsearch<cr>
 
 
-
 " Following yoututbe
 " set colorcolumn=170
 call matchadd('ColorColumn','\%150v',100)
@@ -297,11 +296,24 @@ au VimEnter no_plugins.vim command! RUN execute getline(".")
 
 " Own mappings testing
 " *unmap <c-u>
+augroup purescript_iabbrev
+  autocmd!
+  autocmd FileType purescript iabbrev <buffer> if if then else
+  autocmd FileType purescript iabbrev <buffer> im import
+augroup END
+autocmd BufRead,FileType,BufNewFile purescript nnoremap <buffer> cx <esc>0i--<esc> 
 nnoremap H 0
 nnoremap L $
+inoremap jk <esc> 
 inoremap <c-u> <esc>v$Ui
 inoremap <c-h> <esc>k0veyo<esc>pi
 nnoremap <leader>v :source $MYVIMRC<cr>
 nnoremap <leader>ev :vsplit $MYVIMRC<cr>
 iabbrev impo import
 iabbrev @@ aravind.mallapureddy@juspay.in
+nnoremap <leader>m <esc>f(vf)xx<esc>F.vFfxx<esc>
+nnoremap <leader>ce :%s/Control.Monad/Effect/gc<cr>
+nnoremap <leader>df :%s/Data.//gc<cr>
+nnoremap <leader>nd :/Data.Foreign.NullOrUndefined<cr><esc>dd
+nnoremap <leader>nm :%s/NullOrUndefined/Maybe/gc<cr>
+nnoremap <leader>ud <esc>Fuvf<Space>x<esc>
