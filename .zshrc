@@ -13,6 +13,8 @@ export ZSH=/Users/aravind.mallapureddy/.oh-my-zsh
 # fi
 
 #aliases
+alias kb='kubectl'
+alias nwjs='/Users/aravind.mallapureddy/Downloads/nwjs-v0.34.4-osx-x64/nwjs.app/Contents/MacOS/nwjs'
 alias cja='./gradlew createJsaFiles'
 alias ccc='cc --std=c99 -Wall'
 alias bro='docker run -it browsh/browsh'
@@ -92,12 +94,6 @@ ZSH_THEME="powerlevel9k/powerlevel9k"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(
-  git
-  zsh-autosuggestions
-  zsh-completions
-)
-
 source $ZSH/oh-my-zsh.sh
 source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
 
@@ -149,7 +145,7 @@ BULLETTRAIN_PROMPT_ORDER=(
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 # source ~/.oh-my-zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-plugins=(git colorize bundler)
+plugins=(git colorize bundler zsh-autosuggestions zsh-completions)
 # source  ~/powerlevel9k/powerlevel9k.zsh-theme
 POWERLEVEL9K_SHORTEN_DELIMITER=""
 POWERLEVEL9K_SHORTEN_STRATEGY="truncate_from_right"
@@ -198,11 +194,8 @@ export PATH="/usr/local/opt/openssl/bin:$PATH"
 export PATH="/usr/local/opt/mysql@5.7/bin:$PATH"
 nvm use v9
 
-eval "$(pyenv init -)"
-pyenv shell pypy3.5-6.0.0
-
-export GOPATH="$HOME/Desktop/code/go"
-export GOROOT="$HOME/Desktop/code/go"
-
-
 source /usr/local/bin/aws_zsh_completer.sh
+
+eval "$(pyenv init -)"
+
+
