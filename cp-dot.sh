@@ -1,5 +1,5 @@
 
-cp ~/.vimrc ./vimrcMac
+cp ~/.vimrc ./vimrc
 cp ~/.zshrc ./
 cp ~/.tmux.conf ./
 

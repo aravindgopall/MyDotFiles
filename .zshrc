@@ -2,61 +2,41 @@
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
-export ZSH=/Users/aravind.mallapureddy/.oh-my-zsh
-# source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-# export PATH=/usr/local/bin:$PATH
-# if [ "$TMUX" = "" ]; then tmux; fi
-# if which tmux 2>&1 >/dev/null; the
-#   if [ $TERM != "screen-256color" ] && [  $TERM != "screen" ]; then
-#     tmux attach -t hack || tmux new -s hack; exit
-#   fi
-# fi
+export ZSH="/Users/aravindmallapureddy/.oh-my-zsh"
 
-#aliases
-alias kb='kubectl'
-alias nwjs='/Users/aravind.mallapureddy/Downloads/nwjs-v0.34.4-osx-x64/nwjs.app/Contents/MacOS/nwjs'
-alias cja='./gradlew createJsaFiles'
-alias ccc='cc --std=c99 -Wall'
-alias bro='docker run -it browsh/browsh'
-alias etlas='/Users/aravind.mallapureddy/Downloads/etlas'
-alias gs='git status'
-alias ga='git add'
-alias gc='git commit -m' 
-alias gd='git diff'
-alias die='git stash'
-alias push='git push'
-alias gp='git pull'
-alias birth='git stash pop'
-alias gclone='git clone'
-alias c='clear'
-alias v='vim .'
-alias vrc='vim ~/.vimrc'
-alias zrc='vim ~/.zshrc'
-alias trc='vim ~/.tmux.config'
-alias dc='docker exec -it scylla cqlsh'
-alias pb='pulp build'
-alias pwb='pulp --watch build'
-alias bi='bower i'
-alias ni='npm i'
-alias nu='nvm use'
-alias wp='security find-generic-password -D "AirPort network password" -a'
-# Set name of the theme to load. Optionally, if you set this to "random"
-# it'll load a random theme each time that oh-my-zsh is loaded.
+# Set name of the theme to load --- if set to "random", it will
+# load a random theme each time oh-my-zsh is loaded, in which case,
+# to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
 # ZSH_THEME="robbyrussell"
 ZSH_THEME="powerlevel9k/powerlevel9k"
-# Set list of themes to load
-# Setting this variable when ZSH_THEME=random
-# cause zsh load theme from this variable instead of
-# looking in ~/.oh-my-zsh/themes/
-# An empty array have no effect
+# aliases
+alias zrc='vim ~/.zshrc'
+alias sz='source ~/.zshrc'
+alias trc='vim ~/.tmux.conf'
+alias st='tmux source ~/.tmux.conf'
+alias vrc='vim ~/.vimrc'
+alias sv='source ~/.vimrc'
+alias v='vim .'
+alias pb='pulp build'
+alias pwb='pulp -w build'
+alias gs='git status'
+alias ga='git add'
+alias die='git stash'
+alias birth='git stash pop'
+
+
+# Set list of themes to pick from when loading at random
+# Setting this variable when ZSH_THEME=random will cause zsh to load
+# a theme from this variable instead of looking in ~/.oh-my-zsh/themes/
+# If set to an empty array, this variable will have no effect.
 # ZSH_THEME_RANDOM_CANDIDATES=( "robbyrussell" "agnoster" )
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
 
-# Uncomment the following line to use hyphen-insensitive completion. Case
-# sensitive completion must be off. _ and - will be interchangeable.
+# Uncomment the following line to use hyphen-insensitive completion.
+# Case-sensitive completion must be off. _ and - will be interchangeable.
 # HYPHEN_INSENSITIVE="true"
 
 # Uncomment the following line to disable bi-weekly auto-update checks.
@@ -84,37 +64,28 @@ ZSH_THEME="powerlevel9k/powerlevel9k"
 
 # Uncomment the following line if you want to change the command execution time
 # stamp shown in the history command output.
-# The optional three formats: "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
+# You can set one of the optional three formats:
+# "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
+# or set a custom format using the strftime function format specifications,
+# see 'man strftime' for details.
 # HIST_STAMPS="mm/dd/yyyy"
 
 # Would you like to use another custom folder than $ZSH/custom?
 # ZSH_CUSTOM=/path/to/new-custom-folder
 
-# Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
+# Which plugins would you like to load?
+# Standard plugins can be found in ~/.oh-my-zsh/plugins/*
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-source $ZSH/oh-my-zsh.sh
-source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
-
-BULLETTRAIN_PROMPT_ORDER=(
-  git
-  # dir
+plugins=(
+  git zsh-autosuggestions zsh-syntax-highlighting zsh-completions bundler colorize
 )
 
+autoload -U compinit && compinit
+source $ZSH/oh-my-zsh.sh
 
-#BULLETTRAIN_STATUS_BG = green
-#POWERLINE_PATH = "short"
-#POWERLINE_GIT_CLEAN="✔"
-#POWERLINE_GIT_DIRTY="✘"
-#POWERLINE_GIT_ADDED="%F{green}✚%F{black}"
-#POWERLINE_GIT_MODIFIED="%F{blue}✹%F{black}"
-#POWERLINE_GIT_DELETED="%F{red}✖%F{black}"
-#POWERLINE_GIT_UNTRACKED="%F{red}✭%F{black}"
-#POWER[2;2RLINE_GIT_RENAMED="➜"
-#POWERLINE_GIT_UNMERGED="═"
-#POWERLINE_PATH="short"
-#export POWERLINE_HIDE_HOST_NAME="true"
+POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status battery)
 
 # User configuration
 
@@ -144,58 +115,16 @@ BULLETTRAIN_PROMPT_ORDER=(
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
-# source ~/.oh-my-zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-plugins=(git colorize bundler zsh-autosuggestions zsh-completions)
-# source  ~/powerlevel9k/powerlevel9k.zsh-theme
-POWERLEVEL9K_SHORTEN_DELIMITER=""
-POWERLEVEL9K_SHORTEN_STRATEGY="truncate_from_right"
-POWERLEVEL9K_CONTEXT_TEMPLATE="AravindVirat"
-POWERLEVEL9K_VCS_UNTRACKED_ICON='\u25CF'
-POWERLEVEL9K_VCS_UNSTAGED_ICON='\u00b1'
-POWERLEVEL9K_VCS_CLEAN_FOREGROUND='black'
-POWERLEVEL9K_VCS_CLEAN_BACKGROUND='green'
-POWERLEVEL9K_VCS_UNTRACKED_FOREGROUND='black'
-POWERLEVEL9K_VCS_UNTRACKED_BACKGROUND='yellow'
-POWERLEVEL9K_VCS_MODIFIED_FOREGROUND='black'
-POWERLEVEL9K_VCS_MODIFIED_BACKGROUND='yellow'
-POWERLEVEL9K_VCS_INCOMING_CHANGES_ICON='\u2193'
-POWERLEVEL9K_VCS_OUTGOING_CHANGES_ICON='\u2191'
-POWERLEVEL9K_VCS_GIT_ICON='\ue60a'
-POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(context dir vcs)
-POWERLEVEL9K_BATTERY_STAGES="▁▂▃▄▅▆▇█"
-POWERLEVEL9K_CUSTOM_WIFI_SIGNAL="zsh_wifi_signal"
-POWERLEVEL9K_CUSTOM_WIFI_SIGNAL_BACKGROUND="blue"
-POWERLEVEL9K_CUSTOM_WIFI_SIGNAL_FOREGROUND="red"
-zsh_wifi_signal(){
-          local output=$(/System/Library/PrivateFrameworks/Apple80211.framework/Versions/A/Resources/airport -I) 
-          local airport=$(echo $output | grep 'AirPort' | awk -F': ' '{print $2}')
-          if [ "$airport" = "Off" ]; then
-              local color='%F{red}'
-              echo -n "%{$color%}Wifi Off"
-            else
-              local ssid=$(echo $output | grep ' SSID' | awk -F': ' '{print $2}')
-              local speed=$(echo $output | grep 'lastTxRate' | awk -F': ' '{print $2}')
-              local color='%F{red}'
-              [[ $speed -gt 100 ]] && color='%F{green}'
-              [[ $speed -lt 50 ]] && color='%F{red}'
-              echo -n "%{$color%}$ssid $speed Mb/s%{%f%}" # removed char not in my PowerLine font 
-            fi
-   }
-source $HOME/.cargo/env
-POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status battery custom_wifi_signal ip)
 
 export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
-# [ -s "$NVM_DIR/bash_completion" ] && . "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-export PATH="/usr/local/opt/sqlite/bin:$PATH"
-
-export PATH=/Users/aravind.mallapureddy/.local/bin:$PATH
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 export PATH="/usr/local/opt/openssl/bin:$PATH"
-export PATH="/usr/local/opt/mysql@5.7/bin:$PATH"
-nvm use v9
+export PATH="/usr/local/bin:$PATH"
+# eval "$(pyenv init -)"
 
-source /usr/local/bin/aws_zsh_completer.sh
 
-eval "$(pyenv init -)"
-
+# font fix for tmux alacritty
+export LANG=en_US.UTF-8
+export LC_CTYPE=en_US.UTF-8
 
