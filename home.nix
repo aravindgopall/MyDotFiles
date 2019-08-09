@@ -54,6 +54,8 @@ let
     import ./scripts/menu-surfraw.nix { inherit pkgs; };
   shareLink =
     import ./scripts/shareLink.nix { inherit pkgs config; };
+  thoptv =
+    import ./packages/test.nix {inherit pkgs;};
 in
 rec {
   nixpkgs.overlays = [
@@ -100,18 +102,23 @@ rec {
     acpi # TODO : Install only on laptops
     ag
     axel
+    awscli
     bat
+    barrier
     bind
     bindfs
     brotab
     cantarell-fonts
     cabal2nix
+    cargo
+    carnix
     chromium
     ddgr
     dejavu_fonts
     dhall
     dhall-json
     docker-compose
+    docker-credential-gcr
     dunst
     electronApps
     enscript
@@ -124,11 +131,14 @@ rec {
     font-awesome_5
     font-awesome-ttf
     fzf
+    gcc
+    google-cloud-sdk
     googler
-    gimp-with-plugins
+    #gimp-with-plugins
     gnome3.defaultIconTheme
     gnome3.networkmanagerapplet
     gnumake
+    gstreamer
     hack-nerdfonts
     #haskellPackages.hdevtools
     hicolor_icon_theme
@@ -140,15 +150,16 @@ rec {
     keybase
     kitty
     kubectl
-    latest.firefox-beta-bin
     league-of-moveable-type
     light
+    lsof
     material-icons
     menu-surfraw
     mpc_cli
     mpv
     mysql
     ncmpcpp
+    nethogs #network traffic bandwith monitor for each process
     nodejs-10_x
     nodePackages_10_x.bower
     nodePackages_10_x.bower2nix
@@ -156,6 +167,7 @@ rec {
     nodePackages.node2nix
     noto-fonts
     old-purs
+    openssl
     pa_applet
     paprefs
     pass
@@ -163,6 +175,7 @@ rec {
     pasystray
     pavucontrol
     pdftk
+    pkgconfig
     postgresql
     prettyping
     pscid
@@ -170,10 +183,13 @@ rec {
     pursuit
     python
     quickswitch-for-i3
+    racket
+    rustc
     redis
     rofi
     rofiElectronAppsRunner
     rofi-systemd
+    rtorrent
     ruby
     rxvt_unicode-with-plugins
     scrot
@@ -184,7 +200,10 @@ rec {
     stow
     surf-webkit2
     surfraw
+    teamviewer
     termite
+    tig #text based for git
+    #thoptv
     #texlive.combined.scheme-full
     tmux
     ubuntu_font_family
@@ -274,6 +293,7 @@ rec {
 
 
   xdg.configFile."kitty/kitty.conf".source = import ./config/kitty.nix { inherit pkgs; };
+  xdg.configFile."pulse/default.pa".text = lib.readFile ./config/pulseaudio.conf;
   home.file.".ghc/ghci.conf".text = ''
     :def hoogle \s -> return $ ":! hoogle search --color --count=15 \"" ++ s ++ "\""
     :def doc \s -> return $ ":! hoogle search --color --info \"" ++ s ++ "\""
