@@ -34,6 +34,7 @@ set showmatch
 let mapleader = ","
 nnoremap <silent> <leader><space> :noh<cr>
 inoremap jk 
+inoremap <leader><space> <esc>
 inoremap <esc> <nop>
 set scrolloff=3
 syntax on

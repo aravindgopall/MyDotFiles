@@ -40,6 +40,7 @@ in {
     size = 100000;
   };
   initExtra = ''
+    cat ~/.config/zsh/notes.txt
     export MANPAGER="nvim -c 'set ft=man' -"
     export LESS="-QR"
     setopt interactivecomments
@@ -113,6 +114,10 @@ in {
     hdmi1 = "xrandr --output HDMI1 --auto --mode 1920x1080 --output eDP1 --off";
     hdmi1back = "xrandr --output HDMI1 --off --output eDP1 --auto";
     back = "xrandr --output eDP1 --auto";
+    bup = "xbacklight +30%";
+    bup10 = "xbacklight +10%";
+    bdown = "xbacklight -30%";
+    bdown10 = "xbacklight -10%";
   };
   oh-my-zsh = {
     enable = true;

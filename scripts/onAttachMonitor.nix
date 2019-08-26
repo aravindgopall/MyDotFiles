@@ -2,8 +2,8 @@
 
 with pkgs;
 let wallpaper = fetchurl {
-  url = "https://wallpapercave.com/wp/NOFQh9F.png";
-  sha256 = "0n9f4wb4z01ynv6zhi0r0m9hv3fax3vldbrhc8s90y9hwxn7nkn5";
+  url = "https://wallpapercave.com/wp/2gtTP2Y.jpg";
+  sha256 = "0ylpfl2wylzyi7imhl3igq1rgsxihiaykp87784hyfqy69pkydsq";
 };
 in
 writeText "onAttachMonitor" ''

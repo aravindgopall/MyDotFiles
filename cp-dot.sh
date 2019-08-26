@@ -1,8 +1,5 @@
 
-cp ~/.vimrc ./vimrc
-cp ~/.zshrc ./
-cp ~/.tmux.conf ./
-
+cp -r ~/.config/nixpkgs/* ./
 git add .
 git commit -m "updated again"
 git push

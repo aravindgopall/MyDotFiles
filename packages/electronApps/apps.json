@@ -10,5 +10,9 @@
   { "appName" : "Whatsapp", "url" : "https://web.whatsapp.com" },
   { "appName" : "Youtube", "url": "https://youtube.com" },
   { "appName" : "Gaana", "url": "https://www.gaana.com"},
-  { "appName" : "Pursuit", "url": "https://pursuit.purescript.org"}
+  { "appName" : "Pursuit", "url": "https://pursuit.purescript.org"},
+  { "appName" : "ICC", "url": "https://www.google.com/search?q=icc"},
+  { "appName" : "Twitter", "url": "https://www.twitter.com"},
+  { "appName" : "Telegram", "url": "https://web.telegram.com"},
+  { "appName" : "JuspayTweagTrello", "url" : "https://trello.com/b/tYJltgKw/juspay-tweag" }
 ]

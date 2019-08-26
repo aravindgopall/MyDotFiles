@@ -13,6 +13,8 @@ let
 in
 with pkgs;
 let
+  gstreamer-local =
+    callPackage ./packages/gstreamer-local.nix {};
   pCloudCC =
     callPackage ./packages/pCloudCC/pCloudCC.nix {};
   easy-purs =
@@ -22,6 +24,8 @@ let
       inherit pkgs system;
       purescript = easy-purs.purescript;
     };
+  lsnew =
+    import ./packages/lsnew.nix {inherit stdenv fetchFromGitHub fetchurl perlPackages makeWrapper; };
   old-purs =
     import ./packages/oldpurescript.nix {inherit pkgs easy-purs lib;};
   rofiElectronAppsRunner =
@@ -32,6 +36,8 @@ let
     import ./scripts/polybarLaunch.nix { inherit pkgs; };
   i3exit =
     import ./scripts/i3exit.nix { inherit pkgs; };
+  gitignoreh =
+    import ./scripts/gitignoreh.nix {inherit pkgs;};
   passdo =
     import ./scripts/passdo.nix { inherit pkgs; };
   quickswitch-for-i3 =
@@ -123,6 +129,7 @@ rec {
     electronApps
     enscript
     entr
+    gitignoreh
     feh
     ffmpeg-full
     findWindowByTitle
@@ -138,7 +145,7 @@ rec {
     gnome3.defaultIconTheme
     gnome3.networkmanagerapplet
     gnumake
-    gstreamer
+    gstreamer-local
     hack-nerdfonts
     #haskellPackages.hdevtools
     hicolor_icon_theme
@@ -153,6 +160,7 @@ rec {
     league-of-moveable-type
     light
     lsof
+    lsnew
     material-icons
     menu-surfraw
     mpc_cli
@@ -160,6 +168,7 @@ rec {
     mysql
     ncmpcpp
     nethogs #network traffic bandwith monitor for each process
+    nix-generate-from-cpan
     nodejs-10_x
     nodePackages_10_x.bower
     nodePackages_10_x.bower2nix
@@ -177,6 +186,7 @@ rec {
     pdftk
     pkgconfig
     postgresql
+    postman
     prettyping
     pscid
     pulseaudio-ctl
@@ -184,6 +194,7 @@ rec {
     python
     quickswitch-for-i3
     racket
+    ranger
     rustc
     redis
     rofi

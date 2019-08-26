@@ -10,7 +10,7 @@ in
   enable = true;
   viAlias = true;
   vimAlias = true;
-  withNodeJs = true;
+ # withNodeJs = true;
   withPython = true;
   withPython3 = true;
   configure = with pkgs.vimPlugins; {

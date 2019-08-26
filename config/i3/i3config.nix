@@ -158,6 +158,8 @@ in
         { criteria = { class = "Electron"; title = ".*WhatsApp.*"; }; command = "move container to workspace ${lib.elemAt workspaceNumbers 2}";}
         { criteria = { class = "Electron"; title = ".*Gitter.*"; }; command = "move container to workspace ${lib.elemAt workspaceNumbers 2}";}
         { criteria = { class = "Electron"; title = ".*Hangouts.*"; }; command = "move container to workspace ${lib.elemAt workspaceNumbers 2}";}
+        { criteria = { class = "Electron"; title = ".*Trello.*"; }; command = "move container to workspace ${lib.elemAt workspaceNumbers 2}";}
+        { criteria = { class = "Electron"; title = ".*ICC.*"; }; command = "move container to workspace ${lib.elemAt workspaceNumbers 5}";}
       ];
     };
     floating = {

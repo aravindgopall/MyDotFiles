@@ -12,7 +12,7 @@ tray-transparent = true
 ;wm-restack = i3
 ;override-redirect = true
 
-background = #00000000
+background = #aa000000
 foreground = #ccffffff
 
 line-color = ${bar/bottom.background}
