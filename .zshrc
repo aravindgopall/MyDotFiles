@@ -200,3 +200,4 @@ export PATH="/usr/local/bin:$PATH"
 export PATH="/usr/local/opt/libxml2/bin:$PATH"
 export PATH="/Users/acreed/.config/bin:$PATH"
 export LC_ALL=en_US.UTF-8
+export LANG=en_US.UTF-8
