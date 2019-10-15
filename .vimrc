@@ -1,6 +1,6 @@
 "" Plugins
 call plug#begin ('~/.vim/plugged')
-Plug 'dense-analysis/ale'
+"Plug 'dense-analysis/ale'
 Plug 'Shougo/denite.nvim'
 Plug 'mileszs/ack.vim'
 Plug 'vim-airline/vim-airline'
@@ -14,8 +14,11 @@ Plug 'airblade/vim-gitgutter'
 Plug 'cloudhead/neovim-ghcid'
 Plug 'scrooloose/nerdtree'
 Plug 'scrooloose/nerdcommenter'
-Plug 'autozimu/LanguageClient-neovim'
-Plug 'parsonsmatt/intero-neovim'
+Plug 'autozimu/LanguageClient-neovim', {
+    \ 'branch': 'next',
+    \ 'do': 'sh install.sh',
+    \ }
+"Plug 'parsonsmatt/intero-neovim'
 Plug 'Shougo/neomru.vim'
 Plug 'FrigoEU/psc-ide-vim'
 Plug 'purescript-contrib/purescript-vim'
@@ -35,14 +38,15 @@ Plug 'snoe/clojure-lsp'
 Plug 'vim-scripts/VimClojure'
 Plug 'snoe/vim-sexp'
 Plug 'tpope/vim-fireplace'
+Plug 'venantius/vim-cljfmt'
 "Plug 'dgrnbrg/vim-redl'
 Plug 'clojure-vim/vim-cider'
 "Plug 'vim-scripts/paredit.vim'
+Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+Plug 'AndrewRadev/splitjoin.vim'
+Plug 'ctrlpvim/ctrlp.vim'
+Plug 'artur-shaik/vim-javacomplete2'
 call plug#end()
-
-let g:swank_log=1
-let g:project_enable_welcome = 0
-let g:Powerline_symbols = 'fancy'
 
 let g:hardtime_default_on = 0
 syntax on
@@ -98,6 +102,13 @@ set incsearch               " but do highlight as you type your search.
 set ignorecase              " make searches case-insensitive...
 set smartcase               " ... unless they contain at least one capital letter
 set gdefault " have :s///g flag by default on"
+let g:gitgutter_highlight_linenrs = 1
+autocmd VimEnter * if argc() == 0 | NERDTree | endif
+let NERDTreeQuitOnOpen = 1  " Automatically close nerdtree on open a file
+let NERDTreeAutoDeleteBuffer = 1 " Automatically delete the buffer of file deleted
+let NERDTreeMinimalUI = 1
+let NERDTreeDirArrows = 1
+let g:LanguageClient_autoStart = 1
 
 "Disable arrow keys. Getting used to hjkl
 inoremap  <Up>     <NOP>
@@ -298,9 +309,11 @@ endif
 
 "clojure
 let g:sexp_enable_insert_mode_mappings = 1
+let g:clj_fmt_autosave = 1
 
 
 au BufNewFile,BufRead *.purs set filetype=purescript
+autocmd BufReadPost *.clj setlocal filetype=clojure
 let g:purescript_indent_if = 3
 let g:purescript_indent_case = 5
 let g:purescript_indent_let = 4
@@ -332,6 +345,11 @@ autocmd FileType purescript nnoremap  <buffer> <silent> <leader>C :call PSCIDEca
 autocmd FileType purescript nnoremap  <buffer> <silent> <leader>f :call PSCIDEaddClause("")<CR>
 autocmd FileType purescript nnoremap  <buffer> <silent> <leader>qa :call PSCIDEaddImportQualifications()<CR>
 autocmd FileType purescript nnoremap  <buffer> <silent> ]d :call PSCIDEgoToDefinition("", PSCIDEgetKeyword())<CR>
+
+" Java
+let g:JavaComplete_EnableDefaultMappings = 0
+autocmd FileType java setlocal omnifunc=javacomplete#Complete
+autocmd FileType java nnoremap <buffer> <silent> <leader>i <Plug>(JavaComplete-Imports-AddSmart)
 
 tnoremap jk <C-\><C-n>
 command! -nargs=* T split | terminal <args>
@@ -480,34 +498,77 @@ function! s:denite_my_settings() abort
   \ denite#do_map('toggle_select').'j'
 endfunction
 
+"go setup
+" run :GoBuild or :GoTestCompile based on the go file
+function! s:build_go_files()
+  let l:file = expand('%')
+  if l:file =~# '^\f\+_test\.go$'
+    call go#test#Test(0, 1)
+  elseif l:file =~# '^\f\+\.go$'
+    call go#cmd#Build(0)
+  endif
+endfunction
+
+let g:go_fmt_command = "goimports"
+let g:go_highlight_types = 1
+let g:go_highlight_fields = 1
+let g:go_highlight_functions = 1
+let g:go_highlight_function_calls = 1
+let g:go_highlight_operators = 1
+let g:go_highlight_extra_types = 1
+let g:go_highlight_build_constraints = 1
+let g:go_highlight_generate_tags = 1
+let g:go_metalinter_autosave = 1
+let g:go_metalinter_autosave_enabled = ['vet', 'golint']
+let g:go_metalinter_deadline = "5s"
+let g:go_auto_type_info = 1
+let g:go_auto_sameids = 1
+
+autocmd FileType go nmap <leader>b :<C-u>call <SID>build_go_files()<CR>
+autocmd FileType go nnoremap <buffer> <silent> <leader>i :GoImport<CR>
+autocmd FileType go nnoremap <buffer> <silent> <leader>f :GoDef<CR>
+autocmd FileType go nnoremap <buffer> <silent> <leader>D :GoDescribe<CR>
+autocmd FileType go nnoremap <buffer> <silent> <leader>F :GoReferrers<CR>
+autocmd FileType go nnoremap <buffer> <silent> <leader>I :GoImplement<CR>
+autocmd FileType go nnoremap <buffer> <silent> <leader>W :GoWhicherrs<CR>
+autocmd FileType go nnoremap <buffer> <silent> <leader>C :GoChannelPeers<CR>
+autocmd FileType go nnoremap <buffer> <silent> <leader>R :GoRename
+autocmd FileType go nnoremap <buffer> <silent> <leader>P :GoPlay<CR>
+autocmd FileType go nnoremap <buffer> <silent> K :GoDoc<CR>
+autocmd FileType go nnoremap <leader>gi <Plug>(go-info)
+
 " Move visual selection
 vnoremap <silent> J :m '>+1gv=gv<CR>
 vnoremap <silent> K :m '<-2gv=gv<CR>
 
 " For Devicons
-" loading the plugin
-let g:webdevicons_enable = 1
-" vim-airline with Devicons
-let g:airline_powerline_fonts = 1
-" adding to vim-airline's tabline
-let g:webdevicons_enable_airline_tabline = 1
-" adding to vim-airline's statusline
-let g:webdevicons_enable_airline_statusline = 1
-" use double-width(1) or single-width(0) glyphs
-" only manipulates padding, has no effect on terminal or set(guifont) font
-let g:WebDevIconsUnicodeGlyphDoubleWidth = 1
-" Adding the custom source to denite
-let g:webdevicons_enable_denite = 1
-" change the default character when no match found
-let g:WebDevIconsUnicodeDecorateFileNodesDefaultSymbol = 'ﬦ'
-" enable folder/directory glyph flag (disabled by default with 0)
-let g:WebDevIconsUnicodeDecorateFolderNodes = 1
-let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols = {} " needed
-let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols['nix'] = ''
 let g:webdevicons_enable_nerdtree = 1
-let g:DevIconsEnableFoldersOpenClose = 1
-"Specific
-let g:WebDevIconsOS = 'Darwin'
+let g:webdevicons_enabl = 0
+let g:WebDevIconsUnicodeDecorateFolderNodes = 0
+let g:WebDevIconsNerdTreeAfterGlyphPadding = ' '
+" loading the plugin
+"let g:webdevicons_enable = 1
+"" vim-airline with Devicons
+"let g:airline_powerline_fonts = 1
+"" adding to vim-airline's tabline
+"let g:webdevicons_enable_airline_tabline = 1
+"" adding to vim-airline's statusline
+"let g:webdevicons_enable_airline_statusline = 1
+"" use double-width(1) or single-width(0) glyphs
+"" only manipulates padding, has no effect on terminal or set(guifont) font
+"let g:WebDevIconsUnicodeGlyphDoubleWidth = 1
+"" Adding the custom source to denite
+"let g:webdevicons_enable_denite = 1
+"" change the default character when no match found
+"let g:WebDevIconsUnicodeDecorateFileNodesDefaultSymbol = 'ƛ'
+"" enable folder/directory glyph flag (disabled by default with 0)
+"let g:WebDevIconsUnicodeDecorateFolderNodes = 1
+"let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols = {} " needed
+"let g:WebDevIconsUnicodeDecorateFileNodesExtensionSymbols['nix'] = ''
+"let g:webdevicons_enable_nerdtree = 1
+"let g:DevIconsEnableFoldersOpenClose = 1
+""Specific
+"let g:WebDevIconsOS = 'Darwin'
 " ENd of For Devicons
 
 "let g:slime_target = "tmux"
@@ -519,6 +580,9 @@ let g:WebDevIconsOS = 'Darwin'
 "vnoremap <silent> <Leader>e :SlimeSend<CR>
 "nnoremap <silent> <Leader>e :SlimeSendCurrentLine<CR>
 
+let g:LanguageClient_serverCommands = {
+\ 'clojure': ['sh', '-c', 'clojure-lsp'],
+\ }
 "let g:LanguageClient_serverCommands = { 'haskell': ['hie-wrapper'] }
 "nnoremap <F5> :call LanguageClient_contextMenu()<CR>
 "map <Leader>lk :call LanguageClient#textDocument_hover()<CR>
@@ -526,19 +590,20 @@ let g:WebDevIconsOS = 'Darwin'
 "map <Leader>lr :call LanguageClient#textDocument_rename()<CR>
 "map <Leader>lf :call LanguageClient#textDocument_formatting()<CR>
 "map <Leader>lb :call LanguageClient#textDocument_references()<CR>
-"map <Leader>la :call LanguageClient#textDocument_codeAction()<CR>
+"map <leader>la :call LanguageClient#textDocument_codeAction()<CR>
 "map <Leader>ls :call LanguageClient#textDocument_documentSymbol()<CR>
-hi link ALEError Error
-hi Warning term=underline cterm=underline ctermfg=Yellow gui=undercurl guisp=Gold
-hi link ALEWarning Warning
-hi link ALEInfo SpellCap
+"hi link ALEError Error
+"hi Warning term=underline cterm=underline ctermfg=Yellow gui=undercurl guisp=Gold
+"hi link ALEWarning Warning
+"hi link ALEInfo SpellCap
 "let g:LanguageClient_rootMarkers = ['*.cabal', 'stack.yaml']
 
 call deoplete#custom#option('keyword_patterns', {'clojure': '[\w!$%&*+/:<=>?@\^_~\-\.#]*'})
 call deoplete#custom#var('buffer', 'require_same_filetype', v:false)    " otherbuffer complete
 call deoplete#custom#source('LanguageClient','mark', 'ℰ')
 call deoplete#custom#source('omni',          'mark', '⌾')
-call deoplete#custom#source('ale',          'mark', '⌁')
+call deoplete#custom#option('omni_patterns', { 'go': '[^. *\t]\.\w*' })
+"call deoplete#custom#source('ale',          'mark', '⌁')
 "call deoplete#custom#source('flow',          'mark', '⌁')
 "call deoplete#custom#source('ternjs',        'mark', '⌁')
 "call deoplete#custom#source('go',            'mark', '⌁')
@@ -550,14 +615,13 @@ call deoplete#custom#source('ale',          'mark', '⌁')
 "call deoplete#custom#source('tmux-complete', 'mark', '⊶')
 "call deoplete#custom#source('syntax',        'mark', '♯')
 "call deoplete#custom#source('member',        'mark', '.')
-call deoplete#custom#source('LanguageClient', 'rank', 1000)    " change the languageclient ranking
-call deoplete#custom#source('ale', 'rank', 500)    " change the ale ranking
+"call deoplete#custom#source('ale', 'rank', 500)    " change the ale ranking
 
 let g:hdevtools_options = '-g-isrc -g-Wall --nostack'
-let g:ale_haskell_hdevtools_options = '-g-isrc -g-Wall --nostack'
+"let g:ale_haskell_hdevtools_options = '-g-isrc -g-Wall --nostack'
 let g:hdevtools_stack = 0
 
-let g:ale_completion_enabled = 1
+"let g:ale_completion_enabled = 1
 
 autocmd FileType haskell nnoremap <silent> <leader>i :HoogleInfo<CR>
 autocmd FileType haskell nnoremap <silent> <leader>I :HoogleClose<CR>
@@ -621,117 +685,3 @@ function! s:check_back_space() abort
   let col = col('.') - 1
   return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
-
-" Use <c-space> to trigger completion.
-"inoremap <silent><expr> <c-space> coc#refresh()
-
-"" Use <cr> to confirm completion, `<C-g>u` means break undo chain at current position.
-"" Coc only does snippet and additional edit on confirm.
-"inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
-"" Or use `complete_info` if your vim support it, like:
-"" inoremap <expr> <cr> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>"
-
-"" Use `[g` and `]g` to navigate diagnostics
-"nmap <silent> [g <Plug>(coc-diagnostic-prev)
-"nmap <silent> ]g <Plug>(coc-diagnostic-next)
-
-"" Remap keys for gotos
-"nmap <silent> gd <Plug>(coc-definition)
-"nmap <silent> gy <Plug>(coc-type-definition)
-"nmap <silent> gi <Plug>(coc-implementation)
-"nmap <silent> gr <Plug>(coc-references)
-
-"" Highlight symbol under cursor on CursorHold
-"autocmd CursorHold * silent call CocActionAsync('highlight')
-
-"" Remap for rename current word
-"nmap <leader>rn <Plug>(coc-rename)
-
-"" Remap for format selected region
-"xmap <leader>f  <Plug>(coc-format-selected)
-"nmap <leader>f  <Plug>(coc-format-selected)
-
-"augroup mygroup
-  "autocmd!
-  "" Setup formatexpr specified filetype(s).
-  "autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
-  "" Update signature help on jump placeholder
-  "autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
-"augroup end
-
-"" Remap for do codeAction of selected region, ex: `<leader>aap` for current paragraph
-"xmap <leader>a  <Plug>(coc-codeaction-selected)
-"nmap <leader>a  <Plug>(coc-codeaction-selected)
-
-"" Remap for do codeAction of current line
-"nmap <leader>ac  <Plug>(coc-codeaction)
-"" Fix autofix problem of current line
-"nmap <leader>qf  <Plug>(coc-fix-current)
-
-"" Create mappings for function text object, requires document symbols feature of languageserver.
-"xmap if <Plug>(coc-funcobj-i)
-"xmap af <Plug>(coc-funcobj-a)
-"omap if <Plug>(coc-funcobj-i)
-"omap af <Plug>(coc-funcobj-a)
-
-"" Use <C-d> for select selections ranges, needs server support, like: coc-tsserver, coc-python
-"nmap <silent> <C-d> <Plug>(coc-range-select)
-"xmap <silent> <C-d> <Plug>(coc-range-select)
-
-"" Use `:Format` to format current buffer
-"command! -nargs=0 Format :call CocAction('format')
-
-"" Use `:Fold` to fold current buffer
-"command! -nargs=? Fold :call     CocAction('fold', <f-args>)
-
-"" use `:OR` for organize import of current buffer
-"command! -nargs=0 OR   :call     CocAction('runCommand', 'editor.action.organizeImport')
-
-"" Add status line support, for integration with other plugin, checkout `:h coc-status`
-"set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
-
-"" Using CocList
-"" Show all diagnostics
-"nnoremap <silent> <space>a  :<C-u>CocList diagnostics<cr>
-"" Manage extensions
-"nnoremap <silent> <space>e  :<C-u>CocList extensions<cr>
-"" Show commands
-"nnoremap <silent> <space>c  :<C-u>CocList commands<cr>
-"" Find symbol of current document
-"nnoremap <silent> <space>o  :<C-u>CocList outline<cr>
-"" Search workspace symbols
-"nnoremap <silent> <space>s  :<C-u>CocList -I symbols<cr>
-"" Do default action for next item.
-"nnoremap <silent> <space>j  :<C-u>CocNext<CR>
-"" Do default action for previous item.
-"nnoremap <silent> <space>k  :<C-u>CocPrev<CR>
-"" Resume latest coc list
-"nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
-
-"" Show documentation
-"function! s:show_documentation()
-  "if &filetype == 'vim'
-    "execute 'h '.expand('<cword>')
-  "else
-    "call CocAction('doHover')
-  "endif
-"endfunction
-
-"function! Expand(exp) abort
-    "let l:result = expand(a:exp)
-    "return l:result ==# '' ? '' : "file://" . l:result
-"endfunction
-
-"nnoremap <silent> crcc :call CocRequest('clojure-lsp', 'workspace/executeCommand', {'command': 'cycle-coll', 'arguments': [Expand('%:p'), line('.') - 1, col('.') - 1]})<CR>
-"nnoremap <silent> crth :call CocRequest('clojure-lsp', 'workspace/executeCommand', {'command': 'thread-first', 'arguments': [Expand('%:p'), line('.') - 1, col('.') - 1]})<CR>
-"nnoremap <silent> crtt :call CocRequest('clojure-lsp', 'workspace/executeCommand', {'command': 'thread-last', 'arguments': [Expand('%:p'), line('.') - 1, col('.') - 1]})<CR>
-"nnoremap <silent> crtf :call CocRequest('clojure-lsp', 'workspace/executeCommand', {'command': 'thread-first-all', 'arguments': [Expand('%:p'), line('.') - 1, col('.') - 1]})<CR>
-"nnoremap <silent> crtl :call CocRequest('clojure-lsp', 'workspace/executeCommand', {'command': 'thread-last-all', 'arguments': [Expand('%:p'), line('.') - 1, col('.') - 1]})<CR>
-"nnoremap <silent> cruw :call CocRequest('clojure-lsp', 'workspace/executeCommand', {'command': 'unwind-thread', 'arguments': [Expand('%:p'), line('.') - 1, col('.') - 1]})<CR>
-"nnoremap <silent> crua :call CocRequest('clojure-lsp', 'workspace/executeCommand', {'command': 'unwind-all', 'arguments': [Expand('%:p'), line('.') - 1, col('.') - 1]})<CR>
-"nnoremap <silent> crml :call CocRequest('clojure-lsp', 'workspace/executeCommand', {'command': 'move-to-let', 'arguments': [Expand('%:p'), line('.') - 1, col('.') - 1, input('Binding name: ')]})<CR>
-"nnoremap <silent> cril :call CocRequest('clojure-lsp', 'workspace/executeCommand', {'command': 'introduce-let', 'arguments': [Expand('%:p'), line('.') - 1, col('.') - 1, input('Binding name: ')]})<CR>
-"nnoremap <silent> crel :call CocRequest('clojure-lsp', 'workspace/executeCommand', {'command': 'expand-let', 'arguments': [Expand('%:p'), line('.') - 1, col('.') - 1]})<CR>
-"nnoremap <silent> cram :call CocRequest('clojure-lsp', 'workspace/executeCommand', {'command': 'add-missing-libspec', 'arguments': [Expand('%:p'), line('.') - 1, col('.') - 1]})<CR>
-"nnoremap <silent> crcn :call CocRequest('clojure-lsp', 'workspace/executeCommand', {'command': 'clean-ns', 'arguments': [Expand('%:p'), line('.') - 1, col('.') - 1]})<CR>
-"nnoremap <silent> cref :call CocRequest('clojure-lsp', 'workspace/executeCommand', {'command': 'extract-function', 'arguments': [Expand('%:p'), line('.') - 1, col('.') - 1, input('Function name: ')]})<CR>
