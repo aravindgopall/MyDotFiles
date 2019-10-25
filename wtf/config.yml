@@ -1,0 +1,145 @@
+
+wtf:
+  colors:
+    border:
+      focusable: darkslateblue
+      focused: orange
+      normal: gray
+  grid:
+    columns: [32, 32, 32, 32, 90]
+    rows: [10, 10, 10, 4, 4, 90]
+  refreshInterval: 1
+  mods:
+    #clocks_a:
+      #colors:
+        #rows:
+          #even: "lightblue"
+          #odd: "white"
+      #enabled: true
+      #locations:
+        #Vancouver: "America/Vancouver"
+        #Toronto: "America/Toronto"
+      #position:
+        #top: 0
+        #left: 1
+        #height: 1
+        #width: 1
+      #refreshInterval: 15
+      #sort: "alphabetical"
+      #title: "Clocks A"
+      #type: "clocks"
+    #clocks_b:
+      #colors:
+        #rows:
+          #even: "lightblue"
+          #odd: "white"
+      #enabled: true
+      #locations:
+        #Avignon: "Europe/Paris"
+        #Barcelona: "Europe/Madrid"
+        #Dubai: "Asia/Dubai"
+      #position:
+        #top: 0
+        #left: 2
+        #height: 1
+        #width: 1
+      #refreshInterval: 15
+      #sort: "alphabetical"
+      #title: "Clocks B"
+      #type: "clocks"
+    security:
+      enabled: true
+      position:
+        top: 0
+        left: 2
+        height: 1
+        width: 1
+      refreshInterval: 3600
+    ipinfo:
+      colors:
+        name: "lightblue"
+        value: "white"
+      enabled: true
+      position:
+        top: 4
+        left: 0
+        height: 2
+        width: 1
+      refreshInterval: 150
+    power:
+      enabled: true
+      position:
+        top: 4
+        left: 1
+        height: 2
+        width: 1
+      refreshInterval: 15
+      title: "⚡️"
+    #textfile:
+      #enabled: true
+      #filePath: "~/.config/wtf/config.yml"
+      #format: true
+      #position:
+        #top: 0
+        #left: 0
+        #height: 4
+        #width: 1
+      #refreshInterval: 30
+      #wrapText: false
+    #uptime:
+      #args: [""]
+      #cmd: "uptime"
+      #enabled: true
+      #position:
+        #top: 3
+        #left: 1
+        #height: 1
+        #width: 2
+      #refreshInterval: 30
+      #type: cmdrunner
+    hackernews:
+      enabled: true
+      numberOfStories: 30
+      position:
+        top: 0
+        left: 4
+        width: 3
+        height: 4
+      storyType: top
+      refreshInterval: 900
+    datadog:
+      apiKey: ""
+      applicationKey: ""
+      enabled: true
+      monitors:
+        tags:
+          - "team benefits"
+      position:
+        top: 4
+        left: 4
+        width: 3
+        height: 3
+    spotify:
+      enabled: true
+      colors:
+        label: "green"
+        text: "white"
+      position:
+        top: 0
+        left: 0
+        height: 4
+        width: 2
+      refreshInterval: 0
+    #feedreader:
+      #enabled: true
+      #feeds:
+      #- https://news.ycombinator.com/rss
+      #feedLimit: 10
+      #focusable: true
+      #position:
+        #top: 0
+        #left: 4
+        #width: 3
+        #height: 4
+      #title: "Hacker News"
+      #updateInterval: 14400
