@@ -201,6 +201,13 @@ export PATH="/usr/local/opt/libxml2/bin:$PATH"
 export PATH="/Users/acreed/.config/bin:$PATH"
 export LC_ALL=en_US.UTF-8
 export GOPATH=$HOME/go
-export PATH=$PATH:$GOPATH/binexport LANG=en_US.UTF-8
+export PATH=$PATH:$GOPATH/bin
+export LANG=en_US.UTF-8
 export PATH="/Users/acreed/Downloads/apache-maven-3.6.2/bin:$PATH"
 export JAVA_HOME="/Library/Java/JavaVirtualMachines/adoptopenjdk-8.jdk/Contents/Home:$JAVA_HOME"
+export PATH=$PKG_CONFIG:$PATH
+export PATH=$PATH:$HOME/.cargo/bin
+export NVM_DIR="$HOME/.nvm"
+  [ -s "/usr/local/opt/nvm/nvm.sh" ] && . "/usr/local/opt/nvm/nvm.sh"
+export PKG_CONFIG="/usr/local/Cellar/librdkafka/HEAD-7aa9b39/lib/pkgconfig"
+export PATH="/usr/local/opt/openssl/bin:$PATH"

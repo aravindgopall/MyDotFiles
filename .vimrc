@@ -6,9 +6,14 @@ Plug 'mileszs/ack.vim'
 Plug 'vim-airline/vim-airline'
 Plug 'ericbn/vim-solarized'
 Plug 'mattn/calendar-vim'
+Plug 'w0rp/ale'
 Plug 'Shougo/deoplete.nvim'
 Plug 'tpope/vim-fugitive'
+Plug 'gregsexton/gitv', {'on': ['Gitv']}
+Plug 'vim-syntastic/syntastic'
 Plug 'tpope/vim-surround'
+Plug 'liuchengxu/vim-clap'
+Plug 'liuchengxu/vista.vim'
 Plug 'tpope/vim-repeat'
 Plug 'airblade/vim-gitgutter'
 Plug 'cloudhead/neovim-ghcid'
@@ -35,7 +40,8 @@ Plug 'edkolev/tmuxline.vim'
 "Plug 'neoclide/coc.nvim', {'branch': 'release'}
 "Plug 'clojure-vim/async-clj-omni'
 Plug 'snoe/clojure-lsp'
-Plug 'vim-scripts/VimClojure'
+"Plug 'vim-scripts/VimClojure'
+Plug 'aclaimant/syntastic-joker'
 Plug 'snoe/vim-sexp'
 Plug 'tpope/vim-fireplace'
 Plug 'venantius/vim-cljfmt'
@@ -43,9 +49,17 @@ Plug 'venantius/vim-cljfmt'
 Plug 'clojure-vim/vim-cider'
 "Plug 'vim-scripts/paredit.vim'
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+Plug 'hwayne/tla.vim'
 Plug 'AndrewRadev/splitjoin.vim'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'artur-shaik/vim-javacomplete2'
+Plug 'wsdjeg/JavaUnit.vim'
+Plug 'dragfire/improved-syntax-highlighting-vim'
+Plug 'puremourning/vimspector'
+Plug 'tfnico/vim-gradle'
+Plug 'jiangmiao/auto-pairs'
+Plug 'kmyk/brainfuck-highlight.vim', { 'autoload' : { 'filetypes' : 'brainfuck' } }
+Plug 'Olical/conjure', { 'tag': 'v2.0.0', 'do': 'bin/compile' }
 call plug#end()
 
 let g:hardtime_default_on = 0
@@ -104,11 +118,12 @@ set smartcase               " ... unless they contain at least one capital lette
 set gdefault " have :s///g flag by default on"
 let g:gitgutter_highlight_linenrs = 1
 autocmd VimEnter * if argc() == 0 | NERDTree | endif
-let NERDTreeQuitOnOpen = 1  " Automatically close nerdtree on open a file
+"let NERDTreeQuitOnOpen = 1  " Automatically close nerdtree on open a file
 let NERDTreeAutoDeleteBuffer = 1 " Automatically delete the buffer of file deleted
 let NERDTreeMinimalUI = 1
 let NERDTreeDirArrows = 1
 let g:LanguageClient_autoStart = 1
+let g:NERDTreeWinSize=50
 
 "Disable arrow keys. Getting used to hjkl
 inoremap  <Up>     <NOP>
@@ -348,6 +363,7 @@ autocmd FileType purescript nnoremap  <buffer> <silent> ]d :call PSCIDEgoToDefin
 
 " Java
 let g:JavaComplete_EnableDefaultMappings = 0
+set runtimepath^=~/path/to/vim-javacomplete2/
 autocmd FileType java setlocal omnifunc=javacomplete#Complete
 autocmd FileType java nnoremap <buffer> <silent> <leader>i <Plug>(JavaComplete-Imports-AddSmart)
 
@@ -583,6 +599,11 @@ let g:WebDevIconsNerdTreeAfterGlyphPadding = ' '
 let g:LanguageClient_serverCommands = {
 \ 'clojure': ['sh', '-c', 'clojure-lsp'],
 \ }
+
+" Place configuration AFTER `call plug#end()`!
+let g:ale_linters = {
+      \ 'clojure': ['clj-kondo', 'joker']
+      \}
 "let g:LanguageClient_serverCommands = { 'haskell': ['hie-wrapper'] }
 "nnoremap <F5> :call LanguageClient_contextMenu()<CR>
 "map <Leader>lk :call LanguageClient#textDocument_hover()<CR>
@@ -685,3 +706,44 @@ function! s:check_back_space() abort
   let col = col('.') - 1
   return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
+
+"vimspector
+let g:vimspector_enable_mappings = 'HUMAN'
+" ## added by OPAM user-setup for vim / base ## 93ee63e278bdfc07d1139a748ed3fff2 ## you can edit, but keep this line
+let s:opam_share_dir = system("opam config var share")
+let s:opam_share_dir = substitute(s:opam_share_dir, '[\r\n]*$', '', '')
+
+let s:opam_configuration = {}
+
+function! OpamConfOcpIndent()
+  execute "set rtp^=" . s:opam_share_dir . "/ocp-indent/vim"
+endfunction
+let s:opam_configuration['ocp-indent'] = function('OpamConfOcpIndent')
+
+function! OpamConfOcpIndex()
+  execute "set rtp+=" . s:opam_share_dir . "/ocp-index/vim"
+endfunction
+let s:opam_configuration['ocp-index'] = function('OpamConfOcpIndex')
+
+function! OpamConfMerlin()
+  let l:dir = s:opam_share_dir . "/merlin/vim"
+  execute "set rtp+=" . l:dir
+endfunction
+let s:opam_configuration['merlin'] = function('OpamConfMerlin')
+
+let s:opam_packages = ["ocp-indent", "ocp-index", "merlin"]
+let s:opam_check_cmdline = ["opam list --installed --short --safe --color=never"] + s:opam_packages
+let s:opam_available_tools = split(system(join(s:opam_check_cmdline)))
+for tool in s:opam_packages
+  " Respect package order (merlin should be after ocp-index)
+  if count(s:opam_available_tools, tool) > 0
+    call s:opam_configuration[tool]()
+  endif
+endfor
+" ## end of OPAM user-setup addition for vim / base ## keep this line
+"
+
+" Ocaml
+let g:opamshare = substitute(system('opam config var share'),'\n$','','''')
+execute "set rtp+=" . g:opamshare . "/merlin/vim"
+let g:syntastic_ocaml_checkers = ['merlin']
