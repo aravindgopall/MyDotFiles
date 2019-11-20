@@ -15,6 +15,7 @@ Plug 'tpope/vim-surround'
 Plug 'liuchengxu/vim-clap'
 Plug 'liuchengxu/vista.vim'
 Plug 'tpope/vim-repeat'
+Plug 'tpope/vim-abolish' "substitute, coerce, abbrevate
 Plug 'airblade/vim-gitgutter'
 Plug 'cloudhead/neovim-ghcid'
 Plug 'scrooloose/nerdtree'
@@ -60,6 +61,10 @@ Plug 'tfnico/vim-gradle'
 Plug 'jiangmiao/auto-pairs'
 Plug 'kmyk/brainfuck-highlight.vim', { 'autoload' : { 'filetypes' : 'brainfuck' } }
 Plug 'Olical/conjure', { 'tag': 'v2.0.0', 'do': 'bin/compile' }
+Plug 'ndmitchell/hlint'
+Plug 'neovimhaskell/haskell-vim'
+Plug 'alx741/vim-hindent'
+Plug 'parsonsmatt/intero-neovim'
 call plug#end()
 
 let g:hardtime_default_on = 0
@@ -596,14 +601,11 @@ let g:WebDevIconsNerdTreeAfterGlyphPadding = ' '
 "vnoremap <silent> <Leader>e :SlimeSend<CR>
 "nnoremap <silent> <Leader>e :SlimeSendCurrentLine<CR>
 
-let g:LanguageClient_serverCommands = {
-\ 'clojure': ['sh', '-c', 'clojure-lsp'],
-\ }
-
 " Place configuration AFTER `call plug#end()`!
 let g:ale_linters = {
       \ 'clojure': ['clj-kondo', 'joker']
       \}
+let g:ale_linters.haskell = ['stack-ghc-mod', 'hlint']
 "let g:LanguageClient_serverCommands = { 'haskell': ['hie-wrapper'] }
 "nnoremap <F5> :call LanguageClient_contextMenu()<CR>
 "map <Leader>lk :call LanguageClient#textDocument_hover()<CR>
@@ -644,6 +646,7 @@ let g:hdevtools_stack = 0
 
 "let g:ale_completion_enabled = 1
 
+let g:intero_start_immediately = 0
 autocmd FileType haskell nnoremap <silent> <leader>i :HoogleInfo<CR>
 autocmd FileType haskell nnoremap <silent> <leader>I :HoogleClose<CR>
 autocmd FileType haskell nnoremap <silent> <leader><leader> :Unite haskellimport<CR>i
@@ -747,3 +750,9 @@ endfor
 let g:opamshare = substitute(system('opam config var share'),'\n$','','''')
 execute "set rtp+=" . g:opamshare . "/merlin/vim"
 let g:syntastic_ocaml_checkers = ['merlin']
+let g:LanguageClient_rootMarkers = ['*.cabal', 'stack.yaml']
+let g:LanguageClient_serverCommands = {
+    \ 'rust': ['rls'],
+    \ 'clojure': ['sh', '-c', 'clojure-lsp'],
+    \ 'haskell': ['ghcide', '--lsp'],
+    \ }
