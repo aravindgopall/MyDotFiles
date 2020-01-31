@@ -130,36 +130,6 @@ wtf:
         height: 4
         width: 2
       refreshInterval: 0
-    gcal:
-      colors:
-        title: "red"
-        eventTime: "lightblue"
-        description: "yellow"
-        highlights:
-        - ['1on1|1\/11', 'green']
-        - ['apple|google|aws', 'blue']
-        - ['interview|meet', 'magenta']
-        - ['lunch', 'yellow']
-        past: "gray"
-      calendarReadLevel: "reader"
-      conflictIcon: "🚨"
-      currentIcon: "💥"
-      displayResponseStatus: true
-      email: "aravindgopal.ag@gmail.com"
-      enabled: true
-      eventCount: 15
-      hourFormat: "12"
-      multiCalendar: true
-      position:
-        top: 0
-        left: 2
-        height: 4
-        width: 1
-      refreshInterval: 300
-      secretFile: "~/Downloads/credentials.json"
-      showDeclined: true
-      timezone: "India/Kolkata"
-      withLocation: true
     jira:
       apiKey: ""
       colors:

@@ -1,6 +1,9 @@
 "" Plugins
 call plug#begin ('~/.vim/plugged')
 "Plug 'dense-analysis/ale'
+Plug 'dhruvasagar/vim-zoom'
+Plug 'godlygeek/tabular'
+Plug 'ervandew/supertab'
 Plug 'Shougo/denite.nvim'
 Plug 'mileszs/ack.vim'
 Plug 'vim-airline/vim-airline'
@@ -24,7 +27,6 @@ Plug 'autozimu/LanguageClient-neovim', {
     \ 'branch': 'next',
     \ 'do': 'sh install.sh',
     \ }
-"Plug 'parsonsmatt/intero-neovim'
 Plug 'Shougo/neomru.vim'
 Plug 'FrigoEU/psc-ide-vim'
 Plug 'purescript-contrib/purescript-vim'
@@ -63,6 +65,12 @@ Plug 'kmyk/brainfuck-highlight.vim', { 'autoload' : { 'filetypes' : 'brainfuck' 
 Plug 'Olical/conjure', { 'tag': 'v2.0.0', 'do': 'bin/compile' }
 Plug 'ndmitchell/hlint'
 Plug 'neovimhaskell/haskell-vim'
+Plug 'ndmitchell/ghcid'
+Plug 'Twinside/vim-hoogle'
+Plug 'eagletmt/neco-ghc'
+Plug 'eagletmt/ghcmod-vim'
+Plug 'ujihisa/unite-haskellimport'
+Plug 'Shougo/vimproc'
 Plug 'alx741/vim-hindent'
 Plug 'parsonsmatt/intero-neovim'
 call plug#end()
@@ -345,6 +353,16 @@ let g:latex_to_unicode_tab = 1
 let g:latex_to_unicode_auto = 0
 let g:latex_to_unicode_file_types = ["*.purs", "*.hs"]
 
+" Syntastic
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+
 autocmd FileType purescript inoremap -> →
 autocmd FileType purescript inoremap => ⇒
 autocmd FileType purescript inoremap <- ←
@@ -392,8 +410,8 @@ set inccommand=nosplit
 let g:neoformat_enabled_haskell = ['hindent']
 
 "replaced neomake with ale
-"let g:neomake_haskell_enabled_makers = ['hlint']
-"let g:neomake_open_list = 2
+let g:neomake_haskell_enabled_makers = ['hlint']
+let g:neomake_open_list = 2
 
 "call neomake#configure#automake('w')
 
@@ -640,7 +658,7 @@ call deoplete#custom#option('omni_patterns', { 'go': '[^. *\t]\.\w*' })
 "call deoplete#custom#source('member',        'mark', '.')
 "call deoplete#custom#source('ale', 'rank', 500)    " change the ale ranking
 
-let g:hdevtools_options = '-g-isrc -g-Wall --nostack'
+let g:syntastic_haskell_hdevtools_args = '-g-isrc -g-Wall --nostack'
 "let g:ale_haskell_hdevtools_options = '-g-isrc -g-Wall --nostack'
 let g:hdevtools_stack = 0
 
@@ -650,6 +668,25 @@ let g:intero_start_immediately = 0
 autocmd FileType haskell nnoremap <silent> <leader>i :HoogleInfo<CR>
 autocmd FileType haskell nnoremap <silent> <leader>I :HoogleClose<CR>
 autocmd FileType haskell nnoremap <silent> <leader><leader> :Unite haskellimport<CR>i
+let g:haskell_classic_highlighting = 1
+let g:haskell_indent_if = 3
+let g:haskell_indent_case = 2
+let g:haskell_indent_let = 4
+let g:haskell_indent_where = 6
+let g:haskell_indent_before_where = 2
+let g:haskell_indent_after_bare_where = 2
+let g:haskell_indent_do = 3
+let g:haskell_indent_in = 1
+let g:haskell_indent_guard = 2
+let g:haskell_indent_case_alternative = 1
+let g:cabal_indent_section = 2
+
+" Disable haskell-vim omnifunc
+let g:haskellmode_completion_ghc = 0
+
+" neco-ghc
+autocmd FileType haskell setlocal omnifunc=necoghc#omnifunc
+let g:necoghc_enable_detailed_browse = 1
 
 " Clojure Bindings
 "let g:slimv_swank_clojure = '! xterm -e lein swank &'
@@ -746,10 +783,6 @@ endfor
 " ## end of OPAM user-setup addition for vim / base ## keep this line
 "
 
-" Ocaml
-let g:opamshare = substitute(system('opam config var share'),'\n$','','''')
-execute "set rtp+=" . g:opamshare . "/merlin/vim"
-let g:syntastic_ocaml_checkers = ['merlin']
 let g:LanguageClient_rootMarkers = ['*.cabal', 'stack.yaml']
 let g:LanguageClient_serverCommands = {
     \ 'rust': ['rls'],
