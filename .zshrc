@@ -2,7 +2,7 @@
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
-export ZSH="/Users/aravindvirat/.oh-my-zsh"
+export ZSH="/Users/aravindmallapureddy/.oh-my-zsh"
 
 export TERM="xterm-256color"
 source "$HOME/.antigen/antigen.zsh"
@@ -30,7 +30,7 @@ export PATH=$HOME/bin:/usr/local/bin:$PATH
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
 # ZSH_THEME="robbyrussell"
-ZSH_THEME="powerlevel9k/powerlevel9k"
+ZSH_THEME="powerlevel10k/powerlevel10k"
 # aliases
 alias zrc='vim ~/.zshrc'
 alias sz='source ~/.zshrc'
@@ -143,7 +143,7 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "/usr/local/opt/nvm/etc/bash_completion.d/nvm" ] && . "/usr/local/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
 export PATH="/usr/local/opt/openssl/bin:$PATH"
 export PATH="/usr/local/bin:$PATH"
-export PATH="/Users/aravindvirat/.local/bin:$PATH"
+export PATH="/Users/aravindmallapureddy/.local/bin:$PATH"
 
 # font fix for tmux alacritty
 export LANG=en_US.UTF-8
@@ -159,3 +159,13 @@ export LC_CTYPE=en_US.UTF-8
 # kubectl completion
 #source <(kubectl completion zsh)
 export PATH="/usr/local/opt/postgresql@9.6/bin:$PATH"
+export PATH="/usr/local/opt/openjdk/bin:$PATH"
+# Put GHC on the path globally
+GHC_PATH=`stack path | grep compiler-bin | sed -e 's/compiler-bin: //'`
+export PATH="$PATH:$GHC_PATH"
+[ -f "/Users/aravindmallapureddy/.ghcup/env" ] && source "/Users/aravindmallapureddy/.ghcup/env" # ghcup-env
+export PKG_CONFIG_PATH="/usr/local/opt/icu4c/lib/pkgconfig"
+export LDFLAGS="-L/usr/local/opt/icu4c/lib"
+export CPPFLAGS="-I/usr/local/opt/icu4c/include"
+export PATH="/usr/local/opt/icu4c/bin:$PATH"
+export PATH="/usr/local/opt/icu4c/sbin:$PATH"

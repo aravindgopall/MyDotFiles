@@ -73,8 +73,14 @@ Plug 'ujihisa/unite-haskellimport'
 Plug 'Shougo/vimproc'
 Plug 'alx741/vim-hindent'
 Plug 'parsonsmatt/intero-neovim'
+Plug 'JamshedVesuna/vim-markdown-preview'
+Plug 'dan-t/vim-hsimport'
+Plug 'vim-scripts/Superior-Haskell-Interaction-Mode-SHIM'
+Plug 'sdiehl/vim-ormolu'
+Plug 'sbdchd/neoformat'
 call plug#end()
 
+let g:ormolu_command="ormolu"
 let g:hardtime_default_on = 0
 syntax on
 filetype plugin indent on     " required!
@@ -407,7 +413,8 @@ nnoremap <A-k> <C-w>k
 nnoremap <A-l> <C-w>l
 set inccommand=nosplit
 
-let g:neoformat_enabled_haskell = ['hindent']
+let g:neoformat_enabled_haskell = ['ormolu']
+let g:hindent_on_save = 0
 
 "replaced neomake with ale
 let g:neomake_haskell_enabled_makers = ['hlint']
@@ -683,7 +690,6 @@ let g:cabal_indent_section = 2
 
 " Disable haskell-vim omnifunc
 let g:haskellmode_completion_ghc = 0
-
 " neco-ghc
 autocmd FileType haskell setlocal omnifunc=necoghc#omnifunc
 let g:necoghc_enable_detailed_browse = 1
@@ -789,3 +795,5 @@ let g:LanguageClient_serverCommands = {
     \ 'clojure': ['sh', '-c', 'clojure-lsp'],
     \ 'haskell': ['ghcide', '--lsp'],
     \ }
+let vim_markdown_preview_toggle=3
+let vim_markdown_preview_github=1
