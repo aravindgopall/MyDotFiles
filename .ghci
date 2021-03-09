@@ -1,0 +1,22 @@
+:script /Users/aravindmallapureddy/.stack/snapshots/x86_64-osx/c5dfb3e29ee18bd0d69414eacdfcca2e123074a419b2536796e4c19a372c0110/8.8.1/share/x86_64-osx-ghc-8.8.1/ghc-vis-0.9.2/ghci
+:set prompt "\ESC[38;5;208m\STXλ>\ESC[m\STX"
+:def hoogle \s -> return $ ":! hoogle --count=15 \"" ++ s ++ "\""
+:set +s
+:set +t
+:set +m
+:set -ferror-spans -freverse-errors -fprint-expanded-synonyms
+:set -ignore-package pretty-simple -package pretty-simple
+-- :def! pretty \ _ -> pure ":set -interactive-print Text.Pretty.Simple.pPrint"
+-- :pretty
+:seti -XOverloadedStrings
+
+-- Use object code for loading larger projects
+-- :set -fobject-code
+
+-- Only for typechecking
+-- :set -fno-code
+
+-- To set default type of common data
+-- in the below all the numbers will be treated by default double
+-- default(double)
+
