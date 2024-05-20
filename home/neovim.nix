@@ -3,6 +3,7 @@
 
   programs.nixvim = {
     enable = true;
+
     globals = {
       mapleader = ",";
       maplocalleader = ",";
@@ -40,20 +41,63 @@
     # Keymaps
     keymaps = [
       {
-        mode = "i";
+        mode = [ "i" "" "c" ];
         key = "<leader> ";
         action = "<esc>";
+        options.noremap = true;
       }
       {
-        mode = "n";
         key = "<space>";
         action = ":";
+        options.noremap = true;
       }
       {
         mode = "n";
         key = "<leader> ";
         options.silent = true;
         action = ":noh<cr>";
+      }
+      {
+        key = "<leader>n";
+        action = ":Neotree<cr>";
+      }
+      {
+        key = "<f1>";
+        action = ":bprev<CR>";
+        options.noremap = true;
+      }
+      {
+        key = "<f2>";
+        action = ":bnext<CR>";
+        options.noremap = true;
+      }
+      {
+        key = "{";
+        action = ":copen<CR>";
+        options.noremap = true;
+        mode = "n";
+        options.silent = true;
+      }
+      {
+        key = "}";
+        action = ":cclose<CR>";
+        options.noremap = true;
+        mode = "n";
+        options.silent = true;
+      }
+      {
+        key = "(";
+        action = ":lopen<CR>";
+        options.noremap = true;
+        mode = "n";
+        options.silent = true;
+      }
+      {
+        key = ")";
+        action = ":lclose<CR>";
+        options.noremap = true;
+        mode = "n";
+        options.silent = true;
       }
     ];
 
