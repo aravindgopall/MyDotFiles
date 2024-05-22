@@ -36,13 +36,14 @@
       statusline =
         "%F%m%r%h%w%=(%{&ff}/%Y) (line %l/%L, col %c)%{fugitive#statusline()}";
       mouse = "a";
+      # backspace = "indent, eol, start";
     };
 
     # Keymaps
     keymaps = [
       {
         mode = [ "i" "" "c" ];
-        key = "<leader> ";
+        key = "<leader><space>";
         action = "<esc>";
         options.noremap = true;
       }
@@ -98,6 +99,13 @@
         options.noremap = true;
         mode = "n";
         options.silent = true;
+      }
+      {
+        key = "<leader>s";
+        action = ":Neogit<CR>";
+        mode = "n";
+        options.silent = true;
+        options.noremap = true;
       }
     ];
 
@@ -179,9 +187,24 @@
         enable = true;
         keymaps = {
           "<leader>fg" = "live_grep";
+          "\\" = "live_grep";
           "<leader>ff" = "find_files";
+          "]" = "find_files";
           "<leader>b" = "buffers";
-          # "<esc>" = "require('telescope.actions').close()";
+        };
+        settings = {
+          defaults = {
+            mappings = {
+              i = {
+                "<esc>".__raw = "require('telescope.actions').close";
+                "<leader><space>".__raw = "require('telescope.actions').close";
+              };
+              n = {
+                "<esc>".__raw = "require('telescope.actions').close";
+                "<leader><space>".__raw = "require('telescope.actions').close";
+              };
+            };
+          };
         };
         keymapsSilent = true;
         extensions = {
@@ -221,6 +244,9 @@
       surround.enable = true;
 
       # Dev
+      auto-save.enable = true;
+      intellitab.enable = true;
+      lastplace.enable = true;
       lsp = {
         enable = true;
         servers = {
