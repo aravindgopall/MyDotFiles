@@ -1,5 +1,4 @@
-{ flake, pkgs, ... }:
-{
+{ flake, pkgs, ... }: {
   imports = [
     ./nix-index.nix
     ./neovim.nix # Comment this out if you do not want to setup Neovim.
@@ -8,7 +7,8 @@
 
   # Recommended Nix settings
   nix = {
-    registry.nixpkgs.flake = flake.inputs.nixpkgs; # https://yusef.napora.org/blog/pinning-nixpkgs-flake/
+    registry.nixpkgs.flake =
+      flake.inputs.nixpkgs; # https://yusef.napora.org/blog/pinning-nixpkgs-flake/
 
     # FIXME: Waiting for this to be merged:
     # https://github.com/nix-community/home-manager/pull/4031
@@ -54,6 +54,8 @@
     g = "git";
     die = "git stash";
     lg = "lazygit";
+    gs = "git status";
+    ngs = "nvim -c Neogit";
   };
 
   # Programs natively supported by home-manager.
@@ -119,9 +121,7 @@
       # userName = "John Doe";
       # userEmail = "johndoe@example.com";
       ignores = [ "*~" "*.swp" ];
-      aliases = {
-        ci = "commit";
-      };
+      aliases = { ci = "commit"; };
       extraConfig = {
         # init.defaultBranch = "master";
         # pull.rebase = "false";

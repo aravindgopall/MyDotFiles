@@ -229,6 +229,21 @@
             { name = "nvim_lsp"; }
             { name = "luasnip"; }
           ];
+          mappings = {
+            "<c-n>" = "cmp.mapping.select_next_item()";
+            "<c-p>" = "cmp.mapping.select_prev_item()";
+            "<Up>" = "cmp.mapping.select_next_item()";
+            "<Down>" = "cmp.mapping.select_prev_item()";
+            "<tab>" =
+              # lua
+              ''
+                function(fallback)
+                  if cmp.visible() then
+                    cmp.select_next_item()
+                  end
+                end
+              '';
+          };
         };
       };
       lspkind = {
@@ -244,7 +259,11 @@
       surround.enable = true;
 
       # Dev
-      auto-save.enable = true;
+      # auto-save = {
+      #   enable = true;
+      #   debounceDelay = 3000;
+      # };
+      autoclose.enable = true;
       intellitab.enable = true;
       lastplace.enable = true;
       lsp = {
