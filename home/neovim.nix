@@ -42,7 +42,7 @@
     # Keymaps
     keymaps = [
       {
-        mode = [ "i" "" "c" ];
+        mode = [ "i" "" "c" "t" ];
         key = "<leader><space>";
         action = "<esc>";
         options.noremap = true;
@@ -103,6 +103,20 @@
       {
         key = "<leader>s";
         action = ":Neogit<CR>";
+        mode = "n";
+        options.silent = true;
+        options.noremap = true;
+      }
+      {
+        key = "<leader>tf";
+        action = ":ToggleTerm direction=float<CR>";
+        mode = "n";
+        options.silent = true;
+        options.noremap = true;
+      }
+      {
+        key = "<leader>tt";
+        action = ":ToggleTerm direction=tab<CR>";
         mode = "n";
         options.silent = true;
         options.noremap = true;
