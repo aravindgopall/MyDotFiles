@@ -243,20 +243,35 @@
             { name = "nvim_lsp"; }
             { name = "luasnip"; }
           ];
-          mappings = {
+          mapping = {
             "<c-n>" = "cmp.mapping.select_next_item()";
             "<c-p>" = "cmp.mapping.select_prev_item()";
             "<Up>" = "cmp.mapping.select_next_item()";
             "<Down>" = "cmp.mapping.select_prev_item()";
-            "<tab>" =
-              # lua
-              ''
+            "<CR>" = "cmp.mapping.confirm({ select = true })";
+            "<Tab>" = ''
+              cmp.mapping(
                 function(fallback)
                   if cmp.visible() then
-                    cmp.select_next_item()
+                    local entry = cmp.get_selected_entry()
+                    if not entry then
+                        cmp.select_next_item({ behavior = cmp.SelectBehavior.Select })
+                    else
+                        cmp.confirm()
+                    end
+                  elseif luasnip.expandable() then
+                    luasnip.expand()
+                  elseif luasnip.expand_or_jumpable() then
+                    luasnip.expand_or_jump()
+                  elseif check_backspace() then
+                    fallback()
+                  else
+                    fallback()
                   end
-                end
-              '';
+                end,
+                { "i", "s" }
+              )
+            '';
           };
         };
       };
@@ -280,6 +295,7 @@
       autoclose.enable = true;
       intellitab.enable = true;
       lastplace.enable = true;
+      markdown-preview.enable = true;
       lsp = {
         enable = true;
         servers = {
