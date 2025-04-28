@@ -44,6 +44,7 @@
     alacritty
     tmate
     silver-searcher
+    redis
 
     # On ubuntu, we need this less for `man home-configuration.nix`'s pager to
     # work.
@@ -51,6 +52,7 @@
   ];
 
   home.shellAliases = {
+    git = "git-ai";
     g = "git";
     die = "git stash";
     lg = "lazygit";
@@ -66,6 +68,8 @@
       initExtra = ''
         # Make Nix and home-manager installed things available in PATH.
         export PATH=/run/current-system/sw/bin/:/nix/var/nix/profiles/default/bin:$HOME/.nix-profile/bin:/etc/profiles/per-user/$USER/bin:$PATH
+        alias docker=podman
+        shopt -s expand_aliases
       '';
     };
 
@@ -75,8 +79,13 @@
       autosuggestion.enable = true;
       syntaxHighlighting.enable = true;
       envExtra = ''
-        # Make Nix and home-manager installed things available in PATH.
+                # Make Nix and home-manager installed things available in PATH.
         export PATH=/run/current-system/sw/bin/:/nix/var/nix/profiles/default/bin:$HOME/.nix-profile/bin:/etc/profiles/per-user/$USER/bin:$PATH
+        export LIBCLANG_PATH="/Users/aravind.mallapureddy/.rustup/toolchains/esp/xtensa-esp32-elf-clang/esp-19.1.2_20250225/esp-clang/lib"
+        export PATH="/Users/aravind.mallapureddy/.rustup/toolchains/esp/xtensa-esp-elf/esp-14.2.0_20240906/xtensa-esp-elf/bin:$PATH"
+        export PATH="/Users/aravind.mallapureddy/.local/bin:$PATH"
+
+
       '';
     };
 
