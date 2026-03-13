@@ -15,7 +15,7 @@
     # Settings
     opts = {
       expandtab = true;
-      shiftwidth = 4;
+      shiftwidth = 2;
       smartindent = true;
       tabstop = 2;
       number = true;
@@ -305,13 +305,24 @@
             enable = true;
             settings.formatting.command = [ "nixpkgs-fmt" ];
           };
+          svelte = {
+            enable = true;
+            initOptions = { svelte.plugin = { typescript.enable = true; }; };
+
+          };
           rust-analyzer = {
             enable = true;
             installCargo = false;
             installRustc = false;
           };
+          pylsp = {
+            enable = true;
+            settings.plugins = { ruff.enabled = true; };
+          };
         };
       };
+      # typescript
+      #      typescript-tools = { enable = true; };
     };
   };
 }

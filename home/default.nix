@@ -83,9 +83,17 @@
         export PATH=/run/current-system/sw/bin/:/nix/var/nix/profiles/default/bin:$HOME/.nix-profile/bin:/etc/profiles/per-user/$USER/bin:$PATH
         export LIBCLANG_PATH="/Users/aravind.mallapureddy/.rustup/toolchains/esp/xtensa-esp32-elf-clang/esp-19.1.2_20250225/esp-clang/lib"
         export PATH="/Users/aravind.mallapureddy/.rustup/toolchains/esp/xtensa-esp-elf/esp-14.2.0_20240906/xtensa-esp-elf/bin:$PATH"
+        export PATH="$HOME/.cargo/bin:$PATH"
         export PATH="/Users/aravind.mallapureddy/.local/bin:$PATH"
 
 
+      '';
+      initExtra = ''
+  	command_not_found_handler() {
+	  local input="$*"
+	  sutra --no-tui --smriti suggest --input "$input" --interactive
+	  return 127
+	}
       '';
     };
 
